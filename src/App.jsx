@@ -1,11 +1,12 @@
-import { FakeStore } from "./components/tasks/day1/fakestore"
+import { Home } from "./components/tasks/day2/home"
+
 
 function App() {
 
 
   return (
     <>
-      <FakeStore/>
+      <Home/>
     </>
   )
 }
