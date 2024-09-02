@@ -1,4 +1,5 @@
-import { Home } from "./components/tasks/day2/home"
+import { DefaultForm} from "./components/tasks/day3/form"
+
 
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
 
   return (
     <>
-      <Home/>
+      <DefaultForm/>
     </>
   )
 }
