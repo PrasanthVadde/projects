@@ -128,10 +128,10 @@ export class Home extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.products.map((eachProduct) => {
+                    {this.state.products.map((eachProduct,ind) => {
                       return (
-                        <tr key={eachProduct.id}>
-                          <td>{eachProduct.id}</td>
+                        <tr key={ind}>
+                          <td>{ind+1}</td>
                           <td>{eachProduct.title}</td>
                           <td>{eachProduct.description}</td>
                           <td>
