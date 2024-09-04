@@ -1,4 +1,5 @@
-import { UpdateForm } from "./components/tasks/day4/updateForm"
+import { UpdateFunction } from "./components/tasks/day4/dataUpdateFunction"
+
 
 
 
@@ -7,7 +8,7 @@ function App() {
 
   return (
     <>
-      <UpdateForm/>
+      <UpdateFunction/>
     </>
   )
 }

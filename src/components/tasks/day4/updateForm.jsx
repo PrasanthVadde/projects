@@ -3,9 +3,9 @@ import { FaPaw } from "react-icons/fa6";
 import { FaUserAlt } from "react-icons/fa";
 import styles from "./updateForm.module.css";
 import { Instagram } from "react-content-loader";
-import { Modal, Button, Form, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { GrUpdate } from "react-icons/gr";
-
+import { DefaultModal } from "../../modal/modal";
 export class UpdateForm extends Component {
   state = {
     data: [],
@@ -39,12 +39,14 @@ export class UpdateForm extends Component {
     const { userName, firstName, lastName, mobileNumber } = this.state;
     const enteredData = { userName, firstName, lastName, mobileNumber };
 
-
     this.setState({
       data: [...this.state.data, enteredData],
       modalShow: false,
+      userName: "",
+      firstName: "",
+      lastName: "",
+     mobileNumber: "",
     });
-
 
   };
 
@@ -55,9 +57,17 @@ export class UpdateForm extends Component {
     });
   };
 
-  updateHandler = ()=>{
-
-  }
+  updateHandler = (ind) => {
+    const updatingDetails = this.state.data[ind]
+    console.log(updatingDetails)
+    this.setState({
+      userName:updatingDetails.userName,
+      firstName:updatingDetails.firstName,
+      lastName:updatingDetails.lastName,
+      mobileNumber:updatingDetails.mobileNumber,
+      modalShow: true,
+    })
+  };
 
   render() {
     return (
@@ -114,7 +124,11 @@ export class UpdateForm extends Component {
                                 <td>{eachPerson.firstName}</td>
                                 <td>{eachPerson.lastName}</td>
                                 <td>{eachPerson.mobileNumber}</td>
-                                <td><GrUpdate  onClick={()=>this.updateHandler(ind)}/></td>
+                                <td>
+                                  <GrUpdate
+                                    onClick={() => this.updateHandler(ind)}
+                                  />
+                                </td>
                               </tr>
                             </React.Fragment>
                           );
@@ -130,77 +144,199 @@ export class UpdateForm extends Component {
               )}
             </div>
           </div>
-
-          <Modal
-            show={this.state.modalShow}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          >
-            <Modal.Header>
-              <Modal.Title id="contained-modal-title-vcenter">
-                Person Details
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form>
-                <Form.Group className="mb-3" controlId="formUserName">
-                  <Form.Label>User Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="userName"
-                    value={this.state.userName}
-                    onChange={this.handleInputChange}
-                    placeholder="Enter User Name"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formFirstName">
-                  <Form.Label> First Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="firstName"
-                    value={this.state.firstName}
-                    onChange={this.handleInputChange}
-                    placeholder="first name"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formLastName">
-                  <Form.Label> Last Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="lastName"
-                    value={this.state.lastName}
-                    onChange={this.handleInputChange}
-                    placeholder="last name"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formMobileNumber">
-                  <Form.Label>Mobile Number</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="mobileNumber"
-                    value={this.state.mobileNumber}
-                    onChange={this.handleInputChange}
-                    placeholder="mobile number"
-                  />
-                </Form.Group>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={this.closeHandler}>Close</Button>
-              <Button
-                className="btn-primary"
-                onClick={() => this.saveHandler()}
-              >
-                Save
-              </Button>
-            </Modal.Footer>
-          </Modal>
         </div>
+        <DefaultModal
+          showModel={this.state.modalShow}
+          userName={this.state.userName}
+          firstName={this.state.firstName}
+          lastName={this.state.lastName}
+          mobileNumber={this.state.mobileNumber}
+          inputHandler ={this.handleInputChange}
+          closeHandler ={this.closeHandler}
+          saveHandler={this.saveHandler}
+        />
       </>
     );
   }
 }
+
+
+
+// import { Component } from "react";
+// import { FaPaw } from "react-icons/fa6";
+// import { FaUserAlt } from "react-icons/fa";
+// import styles from "./updateForm.module.css";
+// import { Instagram } from "react-content-loader";
+// import { Table } from "react-bootstrap";
+// import { GrUpdate } from "react-icons/gr";
+// import { DefaultModal } from "../../modal/modal";
+
+// export class UpdateForm extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       data:[],
+//       modalShow: false,
+//       contentVisibility: false,
+//       userName: "",
+//       firstName: "",
+//       lastName: "",
+//       mobileNumber: "",
+//       updateIndex: null,
+//     };
+//   }
+
+//   componentDidMount() {
+//     // Load data from local storage when component mounts
+//     const savedData = JSON.parse(localStorage.getItem('data'));
+//     this.setState({ data: savedData });
+//   }
+
+//   clickHandler = () => {
+//     this.setState({
+//       contentVisibility: true,
+//     });
+//   };
+
+//   ShowMore = () => {
+//     this.setState({
+//       modalShow: true,
+//       userName: "",
+//       firstName: "",
+//       lastName: "",
+//       mobileNumber: "",
+//       updateIndex: null,
+//     });
+//   };
+
+//   closeHandler = () => {
+//     this.setState({
+//       modalShow: false,
+//     });
+//   };
+
+//   saveHandler = () => {
+//     const { userName, firstName, lastName, mobileNumber, updateIndex } = this.state;
+//     const enteredData = { userName, firstName, lastName, mobileNumber };
+
+//     let updatedData = JSON.parse(localStorage.getItem('data'));
+
+//     if (updateIndex !== null) {
+//       // Update existing entry
+//       updatedData[updateIndex] = enteredData;
+//     } else {
+//       // Add new entry
+//       updatedData.push(enteredData);
+//     }
+
+//     localStorage.setItem('data', JSON.stringify(updatedData));
+//     this.setState({
+//       data: updatedData,
+//       modalShow: false,
+//       userName: "",
+//       firstName: "",
+//       lastName: "",
+//       mobileNumber: "",
+//       updateIndex: null,
+//     });
+//   };
+
+//   handleInputChange = (event) => {
+//     const { name, value } = event.target;
+//     this.setState({
+//       [name]: value,
+//     });
+//   };
+
+//   updateHandler = (ind) => {
+//     const updatingDetails = this.state.data[ind];
+//     this.setState({
+//       userName: updatingDetails.userName,
+//       firstName: updatingDetails.firstName,
+//       lastName: updatingDetails.lastName,
+//       mobileNumber: updatingDetails.mobileNumber,
+//       modalShow: true,
+//       updateIndex: ind,
+//     });
+//   };
+
+//   render() {
+//     return (
+//       <>
+//         <div className={styles.mainContainer}>
+//           <div className={styles.header}>
+//             <span>
+//               <FaPaw />
+//             </span>
+//             <h4>Prasanth Vadde</h4>
+//             <span>
+//               <a href="#">
+//                 <FaUserAlt />
+//               </a>
+//             </span>
+//           </div>
+
+//           <div className={styles.section2}>
+//             <div className={styles.sideNavbar}>
+//               <button className={styles.navbarItems} onClick={this.clickHandler}>
+//                 Home
+//               </button>
+//               <button className={styles.navbarItems}>About</button>
+//               <button className={styles.navbarItems}>Contact</button>
+//             </div>
+
+//             <div className={styles.main}>
+//               {this.state.contentVisibility ? (
+//                 <div>
+//                   <button onClick={this.ShowMore}>Add</button>
+
+//                   {this.state.data.length > 0 && (
+//                     <Table striped bordered hover>
+//                       <thead>
+//                         <tr>
+//                           <th>S.no</th>
+//                           <th>Username</th>
+//                           <th>First Name</th>
+//                           <th>Last Name</th>
+//                           <th>Mobile Number</th>
+//                           <th>Update</th>
+//                         </tr>
+//                       </thead>
+//                       <tbody>
+//                         {this.state.data.map((eachPerson, ind) => (
+//                           <tr key={ind}>
+//                             <td>{ind + 1}</td>
+//                             <td>{eachPerson.userName}</td>
+//                             <td>{eachPerson.firstName}</td>
+//                             <td>{eachPerson.lastName}</td>
+//                             <td>{eachPerson.mobileNumber}</td>
+//                             <td>
+//                               <GrUpdate onClick={() => this.updateHandler(ind)} />
+//                             </td>
+//                           </tr>
+//                         ))}
+//                       </tbody>
+//                     </Table>
+//                   )}
+//                 </div>
+//               ) : (
+//                 <Instagram viewBox="0 0 380 70" />
+//               )}
+//             </div>
+//           </div>
+//         </div>
+//         <DefaultModal
+//           showModel={this.state.modalShow}
+//           userName={this.state.userName}
+//           firstName={this.state.firstName}
+//           lastName={this.state.lastName}
+//           mobileNumber={this.state.mobileNumber}
+//           inputHandler={this.handleInputChange}
+//           closeHandler={this.closeHandler}
+//           saveHandler={this.saveHandler}
+//         />
+//       </>
+//     );
+//   }
+// }
+
